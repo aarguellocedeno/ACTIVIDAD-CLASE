@@ -1,0 +1,118 @@
+#include <iostream>
+
+using namespace std;
+
+int func1(){
+    int var = 20;
+    cout << "esta es la direccion de memoria de la variable = " << &var <<endl;
+    
+    int *puntero = &var;
+    *puntero = 30;   
+    cout<< "el valor de la variable es = "<< var << "  |  la direccion de memoria de la variable es"<< &var;
+
+    cout << "stack data func1= " << var << endl;
+    cout << "stack address func1 = " << &var <<endl;
+    cout << "heap data func1 = " << *puntero << endl;
+    cout << "heap address func1 = "<< puntero <<endl;
+    return 0;
+}
+
+
+int func2()
+{
+    int var = 5;
+    int *asocia = &var;
+    cout << "esta es la variable  actual = " << *asocia <<endl;
+
+    *asocia = 30;
+    cout<< "el nuevo valor de la variable es = "<< *asocia<< endl;
+    
+    int& vari = var;
+    cout << "\neste es el valor actual por referencia = " << vari <<endl;
+    vari = 88;
+    cout << "ahora es  = " << vari << endl;
+
+    cout << "stack data func2= " << var << endl;
+    cout << "stack address func2 = " << &var <<endl;
+    cout << "heap data func2 = " << *asocia << endl;
+    cout << "heap address func2 = "<< asocia <<endl;
+
+    return 0;
+}
+
+
+int func3()
+{
+    int var[] = {1,2,3,4,5,7,9};
+    int tam = 7;
+    cout<< tam<<endl;
+    int *copia = var;
+    for (int i = 0; i  < tam; i++){
+        cout << "elemento actual= "<< *(copia+i) <<endl;
+        *(copia+i) *= 2;
+        cout << "elemento modificado = "<< *(copia+i)<< "\n\n";
+    } 
+    cout<< "direccion de memoria del array =>  "<<&var<< endl;
+    cout << "direccion de memoria del puntero =>  "<<&copia<<endl;
+    
+    
+    cout << "stack address func3 = " << &var <<endl;
+    cout << "heap address func3 = "<< copia <<endl;
+    
+    
+    return 0;
+}
+
+
+int func4() {
+    int **var = new int*[7];
+    int tam = 7;
+    for (int i = 0; i < tam; i++) {
+        var[i] = new int[3];
+    }
+
+    for (int i = 0; i < tam; i++) {
+        for (int j = 0; j < 3; j++) {
+            var[i][j] = i * 2 + j;
+        }
+    }
+
+    for (int i = 0; i < tam; i++) {
+        delete[] var[i];
+    }
+    
+    
+    cout << "stack address func4 = " << &var <<endl;
+    cout << "heap address func4 = "<< var <<endl;
+    
+    delete[] var;
+    
+    
+    return 0;
+}
+
+int main() {
+
+    int (*algo1)() = func1;
+    cout << "text/code address = " << (void*)algo1 << endl;
+    cout << "text/code message = ";
+    func1();
+
+    int (*algo2)() = func2;
+    cout << "text/code address = " << (void*)algo2 << endl;
+    cout << "text/code message = ";
+    func2();
+
+    int (*algo3)() = func3;
+    cout << "text/code address = " << (void*)algo3 << endl;
+    cout << "text/code message = ";
+    func3();
+
+    int (*algo4)() = func4;
+    cout << "text/code address = " << (void*)algo4 << endl;
+    cout << "text/code message = ";
+    func4();
+
+
+    return 0;
+}
